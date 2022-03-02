@@ -1,0 +1,25 @@
+{
+  "name": "shopcommerce_gh",
+  "version": "1.0.0",
+  "description": "An E-Commerce Website for Trials",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/godfred-nsabo/ShopCommerce_gh.git"
+  },
+  "keywords": [
+    "e-commerce"
+  ],
+  "author": "Godfred Nsabo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/godfred-nsabo/ShopCommerce_gh/issues"
+  },
+  "homepage": "https://github.com/godfred-nsabo/ShopCommerce_gh#readme",
+  "dependencies": {
+    "prettier": "^2.5.1"
+  }
+}
