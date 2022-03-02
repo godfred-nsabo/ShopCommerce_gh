@@ -4,6 +4,7 @@
   "description": "An E-Commerce Website for Trials",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +21,8 @@
   },
   "homepage": "https://github.com/godfred-nsabo/ShopCommerce_gh#readme",
   "dependencies": {
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15",
     "prettier": "^2.5.1"
   }
 }
