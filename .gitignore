@@ -105,3 +105,8 @@ dist
 
 # Private SSH Key
 *.pem
+
+# Zip files
+
+*.zip
+*.rar
