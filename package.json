@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/godfred-nsabo/ShopCommerce_gh#readme",
   "dependencies": {
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1"
