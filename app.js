@@ -5,59 +5,30 @@ const app = express();
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
-
 require('dotenv/config');
 
-/** middlewares */
-// app.use(bodyParser.json())
-
-
+/** Middleware */
 app.use(express.json());
 app.use(morgan('tiny'));
 
-const productSchema = mongoose.Schema({
-  name: String,
-  image: String,
-  countInStock: {
-    type: Number,
-    required: true
-  }
-})
 
-const Product = mongoose.model('Product', productSchema);
-
+ /** Routes */
+const productRoutes = require('./backend/routes/product')
+const categoriesRoutes = require("./backend/routes/categories");
+const usersRoutes = require("./backend/routes/users");
+const ordersRoutes = require("./backend/routes/orders");
 
 const api = process.env.API_URL;
 
-// http://localhost:3000/api/v1/products
+app.use(`${api}/categories`, categoriesRoutes);
+app.use(`${api}/products`, productRoutes);
+app.use(`${api}/users`, usersRoutes);
+app.use(`${api}/orders`, ordersRoutes);
 
-app.get(`${api}/products`, async (req, res)=> {
-  const productList = await Product.find()
 
-  if(!productList) {
-    res.status(500).json({sucess: false})
-  }
-  res.send(productList)
-});
-
-app.post(`${api}/products`, (req, res)=> {
-    const product = new Product({
-      name: req.body.name,
-      image: req.body.image,
-      countInStock: req.body.countInStock
-    })
-    
-    product.save().then((createdProduct => {
-      res.status(201).json(createdProduct)
-    })).catch((err) => {
-      res.status(500).json({
-        error: err,
-        success: false
-      })
-    })
-  });
-
-mongoose.connect(process.env.CONNECTION_STRING, {
+/** Database */
+mongoose
+.connect(process.env.CONNECTION_STRING, {
   dbName: 'shop-Commerce-database'
 })
 .then(()=> {
@@ -66,6 +37,8 @@ mongoose.connect(process.env.CONNECTION_STRING, {
 .catch((err) => {
   console.log(err);
 })
+
+/** Server */
 
 app.listen(3000, () => {
  
