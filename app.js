@@ -5,7 +5,13 @@ const app = express();
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const rateLimit = require("express-rate-limit");
 require("dotenv/config");
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100,  /** limit each IP to 100 requests per windowMs */
+});
 
 app.use(cors());
 app.options("*", cors());
@@ -22,10 +28,10 @@ const ordersRoutes = require("./backend/routes/orders");
 
 const api = process.env.API_URL;
 
-app.use(`${api}/categories`, categoriesRoutes);
-app.use(`${api}/products`, productRoutes);
-app.use(`${api}/users`, usersRoutes);
-app.use(`${api}/orders`, ordersRoutes);
+app.use(`${api}/categories`, limiter, categoriesRoutes);
+app.use(`${api}/products`, limiter, productRoutes);
+app.use(`${api}/users`, limiter, usersRoutes);
+app.use(`${api}/orders`, limiter, ordersRoutes);
 
 /** Database */
 mongoose
