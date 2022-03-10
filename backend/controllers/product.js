@@ -6,12 +6,17 @@ const { Category } = require("../models/category");
 const { Product } = require("../models/product");
 
 const getProduct = async (req, res) => {
-    const productList = await Product.find()
+    let filteredProduct = {};
+    if (req.query.categories) {
+        filteredProduct = { category: req.query.categories.split(",") };
+    }
+
+    const productList = await Product.find({ filteredProduct })
         .select("_id name image price brand description category")
         .populate("category");
 
     if (!productList) {
-        res.status(500).json({ sucess: false });
+        res.status(500).json({ success: false });
     }
     res.send(productList);
 };
@@ -22,7 +27,7 @@ const getProductById = async (req, res) => {
     );
 
     if (!oneProduct) {
-        res.status(500).json({ sucess: false });
+        res.status(500).json({ success: false });
     }
     res.send(oneProduct);
 };
@@ -34,7 +39,7 @@ const getFeaturedPrdt = async (req, res) => {
     );
 
     if (!featuredProducts) {
-        res.status(500).json({ sucess: false });
+        res.status(500).json({ success: false });
     }
     res.send(featuredProducts);
 };
@@ -43,7 +48,7 @@ const getStatistics = async (req, res) => {
     const productStats = await Product.countDocuments();
 
     if (!productStats) {
-        res.status(500).json({ sucess: false });
+        res.status(500).json({ success: false });
     }
     res.send({ productStat: productStats });
 };
