@@ -1,14 +1,8 @@
-const {User} = require('../models/user');
-const express = require('express');
-const router = express.Router();
+const User = require("../controllers/user");
+const express = require("express");
+const Route = express.Router();
 
-router.get(`/`, async (req, res) =>{
-    const userList = await User.find();
+Route.get("/", User.getUser);
+Route.post("/", User.addUser);
 
-    if(!userList) {
-        res.status(500).json({success: false})
-    } 
-    res.send(userList);
-})
-
-module.exports =router;
+module.exports = Route;
