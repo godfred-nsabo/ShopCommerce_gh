@@ -5,12 +5,22 @@ const { userConstant } = require("../constants/messages");
 const bcrypt = require("bcryptjs");
 
 const getUser = async (req, res) => {
-    const userList = await User.find();
+    const userList = await User.find().select('-passwordHash');
 
     if (!userList) {
         res.status(500).json({ success: false });
     }
     res.send(userList);
+};
+
+const getSingleUser = async (req, res) => {
+    const user = await User.findById(req.params.id).select('-passwordHash');
+    if (!user) {
+        res.status(500).json({
+            message: userConstant.getSingleUserError,
+        });
+    }
+    res.status(200).send(user);
 };
 
 const addUser = async (req, res) => {
@@ -37,4 +47,5 @@ const addUser = async (req, res) => {
 module.exports = {
     getUser: getUser,
     addUser: addUser,
+    getSingleUser: getSingleUser,
 };

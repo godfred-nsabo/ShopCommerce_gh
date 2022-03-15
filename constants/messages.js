@@ -7,6 +7,7 @@ const HelperConstant = {
 
 const UserContants = {
 	addUserError: "The User cannot be created!",
+	getSingleUserError: "The category with the given ID was not found",
 
 }
 
