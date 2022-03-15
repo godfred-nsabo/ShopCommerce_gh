@@ -35,6 +35,7 @@
         "eslint": "^8.11.0",
         "express": "^4.17.3",
         "express-rate-limit": "^6.3.0",
+        "jsonwebtoken": "^8.5.1",
         "lint-staged": "^12.3.5",
         "mongoose": "^6.2.4",
         "morgan": "^1.10.0",
@@ -46,14 +47,13 @@
         "yaml": "^1.10.2"
     },
     "lint-staged": {
-      "src/**/*.{js,jsx,ts,tsx}": "eslint"
+        "src/**/*.{js,jsx,ts,tsx}": "eslint"
     },
-  
-  "husky": {
-      "hooks": {
-        "pre-commit": "npx --no-install lint-staged"
-      }
-  },
+    "husky": {
+        "hooks": {
+            "pre-commit": "npx --no-install lint-staged"
+        }
+    },
     "engines": {
         "node": ">=16"
     }
