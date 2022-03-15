@@ -4,10 +4,6 @@
     "private": false,
     "description": "An E-Commerce Website for Trials",
     "main": "index.js",
-    "files": [
-        "lib",
-        "husky.sh"
-    ],
     "scripts": {
         "start": "nodemon app.js",
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -39,6 +35,7 @@
         "eslint": "^8.11.0",
         "express": "^4.17.3",
         "express-rate-limit": "^6.3.0",
+        "lint-staged": "^12.3.5",
         "mongoose": "^6.2.4",
         "morgan": "^1.10.0",
         "nodemon": "^2.0.15",
@@ -48,6 +45,15 @@
         "husky": "^7.0.0",
         "yaml": "^1.10.2"
     },
+    "lint-staged": {
+      "src/**/*.{js,jsx,ts,tsx}": "eslint"
+    },
+  
+  "husky": {
+      "hooks": {
+        "pre-commit": "npx --no-install lint-staged"
+      }
+  },
     "engines": {
         "node": ">=16"
     }
