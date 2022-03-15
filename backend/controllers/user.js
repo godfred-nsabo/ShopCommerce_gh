@@ -3,9 +3,10 @@
 const { User } = require("../models/user");
 const { userConstant } = require("../constants/messages");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const getUser = async (req, res) => {
-    const userList = await User.find().select('-passwordHash');
+    const userList = await User.find().select("-passwordHash");
 
     if (!userList) {
         res.status(500).json({ success: false });
@@ -14,7 +15,7 @@ const getUser = async (req, res) => {
 };
 
 const getSingleUser = async (req, res) => {
-    const user = await User.findById(req.params.id).select('-passwordHash');
+    const user = await User.findById(req.params.id).select("-passwordHash");
     if (!user) {
         res.status(500).json({
             message: userConstant.getSingleUserError,
@@ -44,8 +45,33 @@ const addUser = async (req, res) => {
     res.send(user);
 };
 
+const userLogin = async (req, res) => {
+    const user = await User.findOne({
+        email: req.body.email,
+        name: req.body.name,
+    });
+    const JWT_SECRET = process.env.JWT_SECRET;
+
+    if (!user) {
+        return res.status(400).send(userConstant.userExistError);
+    }
+
+    if (bcrypt.compareSync(req.body.password, user.passwordHash)) {
+        const token = jwt.sign(
+            {
+                userId: user.id,
+            },
+            JWT_SECRET,
+            {expiresIn: process.env.JWT_EXPIRES_IN}
+        );
+        return res.status(200).send({user: user.email, token: token});
+    }
+    return res.status(400).send(userConstant.wrongCredentials);
+};
+
 module.exports = {
     getUser: getUser,
     addUser: addUser,
     getSingleUser: getSingleUser,
+    userLogin: userLogin,
 };
