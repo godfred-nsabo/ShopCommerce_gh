@@ -1,13 +1,47 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema({
-    name: String,
-    image: String,
-    countInStock: {
-        type: Number,
-        required: true
-    }
-})
+const userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
+    },
+    passwordHash: {
+        type: String,
+        required: true,
+    },
+    phone: {
+        type: String,
+        required: true,
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    },
+    street: {
+        type: String,
+        default: "",
+    },
+    apartment: {
+        type: String,
+        default: "",
+    },
+    zip: {
+        type: String,
+        default: "",
+    },
+    city: {
+        type: String,
+        default: "",
+    },
+    country: {
+        type: String,
+        default: "",
+    },
+});
 
 /** Duplicate the ID field */
 userSchema.virtual("id").get(function () {
@@ -26,4 +60,5 @@ userSchema.set("toJSON", {
     },
 });
 
-exports.User = mongoose.model('User', userSchema);
+exports.User = mongoose.model("User", userSchema);
+exports.userSchema = userSchema;
