@@ -8,11 +8,12 @@ const HelperConstant = {
 const UserContants = {
 	addUserError: "The User cannot be created!",
 	getSingleUserError: "The category with the given ID was not found",
-
+	userExistError: "User Not Found! 😡",
+	userAuthenticated: "User Authenticated",
+	wrongCredentials: "Wrong Username or Password"
 }
 
 module.exports = {
     helperConstant: HelperConstant,
 	userConstant: UserContants,
-
 };
